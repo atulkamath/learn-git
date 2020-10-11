@@ -1,0 +1,193 @@
+<html>
+  <style>
+    .content {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 10px;
+    }
+    body {
+      background-size: cover;
+    }
+  </style>
+
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+  />
+
+  <!-- Required scripts -->
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+  <body>
+    <div class="content">
+      <h1>Cat shopping</h1>
+      <div id="app">
+        <form>
+          <b-card-group deck>
+            <b-card
+              title="Whiskas"
+              img-src="https://assets.sainsburys-groceries.co.uk/gol/2994857/1/640x640.jpg"
+              img-alt="Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem"
+              class="mb-2"
+            >
+              <b-card-text>
+                <p>10$</p>
+                <p v-if="stock1empty" v-html>
+                  quantity in stock {{this.product.stock}}
+                </p>
+                <p v-else v-html>Stock over</p>
+              </b-card-text>
+              <b-button
+                :disabled="isActive"
+                input
+                type="button"
+                value="add"
+                v-on:click="addItem"
+                variant="primary"
+                >Add to list</b-button
+              >
+              <!-- <button v-else :disabled='isDisabled'>Send Form</button> -->
+            </b-card>
+            <b-card
+              title="Carrefour"
+              img-src="https://cdnprod.mafretailproxy.com/cdn-cgi/image/format=auto,onerror=redirect/sys-master-prod/h3f/h2c/9206756179998/1591665_main.jpg_480Wx480H"
+              img-alt="Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem"
+              class="mb-2"
+            >
+              <b-card-text>
+                <p>15$</p>
+                <p v-html>quantity in stock {{this.product2.stock2}}</p>
+              </b-card-text>
+              <b-button
+                :disabled="isActive2"
+                input
+                type="button"
+                value="add"
+                v-on:click="addItem2"
+                variant="primary"
+                >Add to list</b-button
+              >
+            </b-card>
+            <b-card
+              title="Friskies"
+              img-src="https://cdn.rona.ca/images/15985029a_L.jpg"
+              img-alt="Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem"
+              class="mb-2"
+            >
+              <b-card-text>
+                <p>25$</p>
+                <p v-html>quantity in stock {{this.product3.stock3}}</p>
+              </b-card-text>
+              <b-button
+                :disabled="isActive3"
+                input
+                type="button"
+                value="add"
+                v-on:click="addItem3"
+                variant="primary"
+                >Add to list</b-button
+              >
+            </b-card>
+          </b-card-group>
+        </form>
+
+        <b-list-group-item> <ul id="tasklist"></ul></b-list-group-item>
+      </div>
+    </div>
+  </body>
+  <script>
+    let app = new Vue({
+      el: "#app",
+      data: {
+        product: {
+          id: 1001,
+          stock: 10,
+        },
+        product2: {
+          id: 1002,
+          stock2: 10,
+        },
+        product3: {
+          id: 1003,
+          stock3: 10,
+        },
+        isActive: false,
+        isActive2: false,
+        isActive3: false,
+
+        cart1: 10,
+        cart2: 10,
+        cart3: 10,
+        newTask: "",
+        newTask2: " ",
+        newTask3: " ",
+        stock1empty: true,
+        stock2empty: true,
+        stock3empty: true,
+
+        funny2: true,
+        funny3: true,
+        cart: [],
+        cart2: [],
+        cart3: [],
+      },
+
+      methods: {
+        addItem: function () {
+          let newItem = document.createElement("li");
+          newItem.innerText = app.newTask + "whiskas";
+          document.getElementById("tasklist").appendChild(newItem);
+          app.newTask = "";
+          this.cart.push(this.product.id);
+          console.log(this.cart);
+          this.product.stock--;
+          console.log(this.product.stock);
+          if (this.product.stock <= 0) {
+            this.stock1empty = false;
+            this.isActive = true;
+          }
+        },
+        addItem2: function () {
+          let newItem2 = document.createElement("li");
+          newItem2.innerText = app.newTask2 + "carrefour";
+          document.getElementById("tasklist").appendChild(newItem2);
+          app.newTask = "";
+          this.cart2.push(this.product2.id);
+          console.log(this.cart);
+          this.product2.stock2--;
+          console.log(this.product2.stock2);
+          if (this.product2.stock2 <= 0) {
+            this.stock2empty = false;
+            this.isActive2 = true;
+          }
+        },
+        addItem3: function () {
+          let newItem3 = document.createElement("li");
+          newItem3.innerText = app.newTask3 + "friskies";
+          document.getElementById("tasklist").appendChild(newItem3);
+          app.newTask = "";
+          this.cart3.push(this.product3.id);
+          console.log(this.cart);
+          this.product3.stock3--;
+          console.log(this.product3.stock3);
+          if (this.product3.stock3 <= 0) {
+            this.stock3empty = false;
+            this.isActive3 = true;
+          }
+        },
+      },
+    });
+  </script>
+</html>
